@@ -1,4 +1,4 @@
-const BACKEND = "https://your-backend-name.onrender.com/video";
+const BACKEND = "https://ai-video-editor-web-3.onrender.com/video";
 
 async function startProcess() {
   const file = document.getElementById("videoFile").files[0];
