@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #38bdf8;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background: #38bdf8;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.progress-box {
+  width: 100%;
+  background: #1e293b;
+  height: 10px;
+  border-radius: 6px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+#progress {
+  width: 0%;
+  height: 100%;
+  background: #22c55e;
+}
+
+video {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+#downloadBtn {
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+  background: #22c55e;
+  color: black;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+}
