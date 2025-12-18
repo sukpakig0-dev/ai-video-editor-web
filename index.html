@@ -2,35 +2,28 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <title>AI Video Editor</title>
+  <title>AI ভিডিও এডিটর বাই আদল</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <div class="container">
     <h1>🎬 AI Video Editor</h1>
-    <p>Long Video → Shorts / Reels / TikTok</p>
-
     <input type="file" id="videoFile" accept="video/*">
-
     <label>Clip Duration (seconds)</label>
     <select id="duration">
       <option value="15">15 sec</option>
       <option value="30" selected>30 sec</option>
       <option value="60">60 sec</option>
     </select>
-
     <button onclick="startProcess()">🚀 Upload & Process</button>
 
     <div class="progress-box">
       <div id="progress"></div>
     </div>
-
     <p id="status"></p>
 
     <video id="resultVideo" controls></video>
-
     <a id="downloadBtn" download style="display:none;">⬇️ Download Video</a>
   </div>
 
