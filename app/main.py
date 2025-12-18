@@ -1,13 +1,11 @@
 from fastapi import FastAPI, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-import uuid, os, shutil
-import subprocess
-import whisper
+import uuid, os
 
 app = FastAPI()
 
-# CORS
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,24 +15,42 @@ app.add_middleware(
 
 UPLOAD_DIR = "uploads"
 OUTPUT_DIR = "output"
-
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 jobs = {}
-model = whisper.load_model("base")  # Whisper model for transcription
 
 @app.get("/")
 def root():
     return {"status": "Backend is running"}
 
-# Upload API
 @app.post("/video/upload")
 async def upload_video(file: UploadFile):
     job_id = str(uuid.uuid4())
     file_path = os.path.join(UPLOAD_DIR, f"{job_id}_{file.filename}")
-    
     with open(file_path, "wb") as f:
+        f.write(await file.read())
+    jobs[job_id] = {"input": file_path, "status": "uploaded"}
+    return {"job_id": job_id}
+
+@app.post("/video/process")
+async def process_video(job_id: str, clip_duration: int = Form(...)):
+    if job_id not in jobs:
+        return {"error": "Job not found"}
+    # Dummy process: just copy file
+    input_file = jobs[job_id]["input"]
+    output_file = os.path.join(OUTPUT_DIR, f"{job_id}_short.mp4")
+    with open(input_file, "rb") as f_in, open(output_file, "wb") as f_out:
+        f_out.write(f_in.read())
+    jobs[job_id]["output"] = output_file
+    jobs[job_id]["status"] = "processed"
+    return {"status": "done"}
+
+@app.get("/video/download")
+async def download_video(job_id: str):
+    if job_id in jobs and "output" in jobs[job_id]:
+        return FileResponse(jobs[job_id]["output"], media_type="video/mp4", filename=f"short_{job_id}.mp4")
+    return {"error": "job not ready"}    with open(file_path, "wb") as f:
         f.write(await file.read())
     
     jobs[job_id] = {"input": file_path, "status": "uploaded"}
